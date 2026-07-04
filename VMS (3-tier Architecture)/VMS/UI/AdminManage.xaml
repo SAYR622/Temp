@@ -1,0 +1,109 @@
+﻿<Page x:Class="VMS.UI.AdminManage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      Title="Manage Admins" Background="#F8FAFC" Loaded="Page_Loaded">
+
+    <Grid Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,25">
+            <TextBlock Text="Administrator Management" 
+                       FontSize="28" 
+                       FontWeight="Bold" />
+
+            <TextBlock Text="Control system access, manage admin profiles, and review pending account requests." 
+                       FontSize="14" 
+                       Foreground="#64748B" 
+                       Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1.2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Margin="0,0,15,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <materialDesign:Card Grid.Row="0" UniformCornerRadius="8" materialDesign:ElevationAssist.Elevation="Dp2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Standard Administrators" FontSize="16" FontWeight="Bold" Margin="15,10"/>
+                        <DataGrid x:Name="dgAdmins" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" 
+                                  SelectionMode="Single" SelectionChanged="dgAdmins_SelectionChanged"
+                                  Background="White" BorderThickness="0" HeadersVisibility="Column">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding AdminID}" Width="50"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                                <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </materialDesign:Card>
+
+                <materialDesign:Card Grid.Row="2" UniformCornerRadius="8" materialDesign:ElevationAssist.Elevation="Dp2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Pending Account Requests" FontSize="16" FontWeight="Bold" Margin="15,10"/>
+                        <DataGrid x:Name="dgRequests" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" 
+                                  SelectionMode="Single" SelectionChanged="dgRequests_SelectionChanged"
+                                  Background="White" BorderThickness="0" HeadersVisibility="Column">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Date" Binding="{Binding TimeReceived}" Width="100"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding FullName}" Width="*"/>
+                                <DataGridTextColumn Header="Contact" Binding="{Binding Contact}" Width="100"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </materialDesign:Card>
+            </Grid>
+
+            <materialDesign:Card Grid.Column="1" UniformCornerRadius="8" Padding="20" materialDesign:ElevationAssist.Elevation="Dp2">
+                <StackPanel>
+                    <TextBlock x:Name="txtFormTitle" Text="Admin Details" FontSize="18" FontWeight="Bold" Margin="0,0,0,20"/>
+
+                    <TextBox x:Name="txtName" materialDesign:HintAssist.Hint="Full Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,15"/>
+                    <TextBox x:Name="txtUsername" materialDesign:HintAssist.Hint="Username" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,15"/>
+                    <TextBox x:Name="txtContact" materialDesign:HintAssist.Hint="Contact Number" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,15"/>
+                    <TextBox x:Name="txtPassword" materialDesign:HintAssist.Hint="Password" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,15"/>
+
+                    <TextBlock Text="  Gender" FontSize="12" Margin="0,10,0,5"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,25">
+                        <RadioButton x:Name="rbMale" Content="Male" IsChecked="True" Margin="0,0,15,0"/>
+                        <RadioButton x:Name="rbFemale" Content="Female"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="pnlStandardActions" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="btnAdd" Content="➕ Add" Width="100" Margin="5" Click="btnAdd_Click" Background="#22C55E" BorderBrush="#22C55E"/>
+                        <Button x:Name="btnUpdate" Content="✏ Update" Width="105" Margin="5" Click="btnUpdate_Click" Background="#3B82F6" BorderBrush="#3B82F6" IsEnabled="False"/>
+                        <Button x:Name="btnDelete" Content="🗑 Delete" Width="100" Margin="5" Click="btnDelete_Click" Background="#EF4444" BorderBrush="#EF4444" IsEnabled="False"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="pnlRequestActions" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Collapsed">
+                        <Button x:Name="btnApprove" Content="APPROVE" Width="135" Margin="5" Click="btnApprove_Click" Background="#22C55E" BorderBrush="#22C55E"/>
+                        <Button x:Name="btnReject" Content="REJECT" Width="135" Margin="5" Click="btnReject_Click" Background="#EF4444" BorderBrush="#EF4444"/>
+                    </StackPanel>
+
+                    <Button x:Name="btnClear" Content="Clear Form" Margin="5,15,5,5" Click="btnClear_Click" Style="{StaticResource MaterialDesignFlatSecondaryLightBgButton}"/>
+                </StackPanel>
+            </materialDesign:Card>
+
+        </Grid>
+    </Grid>
+</Page>
